@@ -164,3 +164,24 @@ test.describe('SEO', () => {
     expect(title.length).toBeGreaterThan(5);
   });
 });
+
+// ---------------------------------------------------------------------------
+// 6. MOBILE RESPONSIVENESS
+// ---------------------------------------------------------------------------
+test.describe('Mobile Responsiveness', () => {
+  test.use({ viewport: { width: 375, height: 812 } });
+  
+  test('homepage has no horizontal overflow on mobile', async ({ page }) => {
+    await page.goto(BASE_URL);
+    const bodyWidth = await page.evaluate(() => document.body.scrollWidth);
+    const viewportWidth = await page.evaluate(() => window.innerWidth);
+    expect(bodyWidth).toBeLessThanOrEqual(viewportWidth + 1); // +1 for rounding
+  });
+
+  test('about page has no horizontal overflow on mobile', async ({ page }) => {
+    await page.goto(`${BASE_URL}/#about`);
+    const bodyWidth = await page.evaluate(() => document.body.scrollWidth);
+    const viewportWidth = await page.evaluate(() => window.innerWidth);
+    expect(bodyWidth).toBeLessThanOrEqual(viewportWidth + 1); // +1 for rounding
+  });
+});

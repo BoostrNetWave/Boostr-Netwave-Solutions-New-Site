@@ -62,10 +62,10 @@ export default function Footer() {
         </div>
         <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/5 gap-6">
           <p className="text-white/20 text-xs">© {new Date().getFullYear()} {company.name}. {company.location}.</p>
-          <div className="flex gap-8 text-white/20 text-xs">
+          <div className="flex flex-wrap justify-center gap-4 sm:gap-8 text-white/20 text-xs">
             <a href="#" className="hover:text-blue transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-blue transition-colors">Terms of Service</a>
-            <a href="#" className="hover:text-blue transition-colors">Refund & Cancellation Policy</a>
+            <a href="#" className="hover:text-blue transition-colors text-center">Refund & Cancellation Policy</a>
           </div>
         </div>
       </div>

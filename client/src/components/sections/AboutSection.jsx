@@ -42,7 +42,7 @@ export default function AboutSection({ data }) {
               <img className="img-zoom w-full aspect-square object-cover" src={data.about.image.src} alt={data.about.image.alt} />
             </div>
             
-            <div className="absolute -bottom-8 -left-8 bg-white p-6 rounded-2xl shadow-2xl border border-border float-gentle z-10">
+            <div className="absolute bottom-4 left-4 md:-bottom-8 md:-left-8 bg-white p-6 rounded-2xl shadow-2xl border border-border float-gentle z-10">
               <p className="text-4xl font-black text-ink">{data.stats[0]?.value}<span className="text-blue">{data.stats[0]?.suffix}</span></p>
               <p className="text-xs text-muted uppercase tracking-widest font-bold mt-1">{data.stats[0]?.label}</p>
             </div>

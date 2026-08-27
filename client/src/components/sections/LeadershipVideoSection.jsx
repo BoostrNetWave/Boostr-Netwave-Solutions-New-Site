@@ -66,7 +66,7 @@ export default function LeadershipVideoSection({ data }) {
               </div>
             </div>
             
-            <div className="grid grid-cols-3 gap-6 pt-6 border-t border-border">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 pt-6 border-t border-border">
               {data?.stats?.map(stat => (
                 <div key={stat.id}>
                   <p className="text-3xl font-black text-ink">{stat.value}{stat.suffix}</p>

@@ -144,8 +144,8 @@ export default function ContentEditor({ schema, api, renderRow, extraActions }) 
           {search ? 'No results found.' : `No ${schema.pluralTitle || `${schema.title}s`} yet. Add one above.`}
         </div>
       ) : (
-        <div className="border border-white/5 rounded-2xl overflow-hidden">
-          <table className="w-full text-sm">
+        <div className="border border-white/5 rounded-2xl overflow-x-auto">
+          <table className="w-full text-sm min-w-[700px]">
             <thead>
               <tr className="border-b border-white/5 bg-white/[0.02]">
                 {schema.columns.map(col => (
