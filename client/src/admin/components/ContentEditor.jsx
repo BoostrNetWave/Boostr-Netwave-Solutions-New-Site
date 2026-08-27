@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import toast from 'react-hot-toast';
+import { uploadFile } from '../api/adminApi';
 
 /**
  * Universal Content Editor
@@ -188,22 +189,11 @@ function FormField({ field, value, onChange }) {
     if (!file) return;
     setUploading(true);
     try {
-      // Upload through our secure backend — no client-side API keys needed
-      const formData = new FormData();
-      formData.append('file', file);
-
-      const res = await fetch('/api/upload', {
-        method: 'POST',
-        credentials: 'include', // sends the JWT cookie for auth
-        body: formData,
-      });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || 'Upload failed');
-
-      onChange(data.data.url);
+      // Upload through our secure backend API
+      const url = await uploadFile(file);
+      onChange(url);
     } catch (err) {
-      toast.error('Upload failed: ' + err.message);
+      toast.error(err.message);
     } finally {
       setUploading(false);
     }
