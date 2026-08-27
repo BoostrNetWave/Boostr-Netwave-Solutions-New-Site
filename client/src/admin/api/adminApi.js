@@ -105,7 +105,16 @@ export const uploadFile = async (file) => {
     body: formData, // fetch will automatically set the correct content-type with boundary
   });
   
-  const json = await res.json();
+  let json = {};
+  const text = await res.text();
+  try {
+    if (text) {
+      json = JSON.parse(text);
+    }
+  } catch (e) {
+    throw new Error(`Upload failed (${res.status}): Server returned non-JSON response.`);
+  }
+
   if (!res.ok) throw new Error(json.message || 'Upload failed');
-  return json.data.url;
+  return json.data?.url;
 };
