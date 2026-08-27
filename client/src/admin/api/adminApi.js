@@ -25,11 +25,11 @@ async function request(method, path, body) {
   const json = await res.json().catch(() => ({}));
 
   if (!res.ok) {
-    // Intercept 401 Unauthorized for expired/missing session
+    // Intercept 401 Unauthorized for expired/missing session (only on admin pages)
     if (res.status === 401 && !isHandlingAuthError) {
-      isHandlingAuthError = true;
       const currentPath = window.location.pathname;
-      if (currentPath !== '/admin/login') {
+      if (currentPath.startsWith('/admin') && currentPath !== '/admin/login') {
+        isHandlingAuthError = true;
         toast.error('Your session has expired. Please log in again.');
         window.location.href = `/admin/login?redirect=${encodeURIComponent(currentPath)}`;
       }
