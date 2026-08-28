@@ -37,6 +37,7 @@ export default function CareerDetail() {
       <PageMeta 
         title={role.seoTitle || role.title} 
         description={role.seoDescription || `Join Boostr Netwave as a ${role.title}`}
+        url={`https://boostrnetwave.com/careers/${role.slug}`}
       />
       <StructuredData 
         schemaType="JobPosting"

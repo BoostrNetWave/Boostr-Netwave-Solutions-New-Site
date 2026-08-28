@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import API_BASE from '../../config/api';
+import PageMeta from '../../components/PageMeta';
 
 export default function CaseStudies() {
   const [projects, setProjects] = useState([]);
@@ -30,6 +31,11 @@ export default function CaseStudies() {
 
   return (
     <div className="bg-white min-h-screen">
+      <PageMeta 
+        title="Case Studies" 
+        description="Explore how we've helped enterprises scale, modernize, and transform their digital infrastructure." 
+        url={"https://boostrnetwave.com" + window.location.pathname}
+      />
       {/* ===== PAGE HEADER ===== */}
       <section id="page-header" className="pt-40 pb-24 bg-soft border-b border-border">
         <div className="max-w-[1360px] mx-auto px-6 md:px-10">
@@ -78,7 +84,7 @@ export default function CaseStudies() {
               {filteredProjects.map((project, index) => (
                 <Link to={`/case-studies/${project.slug}`} key={project._id} className={`service-card block bg-white rounded-[28px] overflow-hidden reveal block stagger-${(index % 4) + 1} border border-border hover:-translate-y-2 hover:border-blue hover:shadow-[0_30px_60px_rgba(0,82,255,0.1),_0_8px_20px_rgba(0,0,0,0.06)] transition-all duration-500`}>
                   <div className="img-zoom-wrap h-64 overflow-hidden">
-                    <img className="img-zoom w-full h-full object-cover transition-transform duration-900 hover:scale-[1.06]" src={project.image || "https://storage.googleapis.com/uxpilot-auth.appspot.com/gen_4456573a0b_241e79a61f2eacd3.png"} alt={project.title} />
+                    <img className="img-zoom w-full h-full object-cover transition-transform duration-900 hover:scale-[1.06]" src={project.image || "https://storage.googleapis.com/uxpilot-auth.appspot.com/gen_4456573a0b_241e79a61f2eacd3.png"} alt={project.imageAlt || project.title} />
                   </div>
                   <div className="p-8">
                     <span className="text-xs font-bold uppercase tracking-widest text-blue px-3 py-1 bg-blue-pale rounded-full">{project.category}</span>

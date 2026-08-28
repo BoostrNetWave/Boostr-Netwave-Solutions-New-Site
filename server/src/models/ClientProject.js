@@ -16,6 +16,7 @@ const clientProjectSchema = new mongoose.Schema({
   result:      { type: String },                           // measurable outcome
   clientQuote: { type: String },                           // a quote from the client
   image:       { type: String },                           // hero/screenshot URL
+  imageAlt:    { type: String, default: '' },
   techStack:   [{ type: String }],
   liveUrl:     { type: String },
   isFeatured:  { type: Boolean, default: false },

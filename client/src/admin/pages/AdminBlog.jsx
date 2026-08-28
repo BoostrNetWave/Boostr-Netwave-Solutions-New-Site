@@ -19,6 +19,7 @@ const schema = {
     { key: 'excerpt', label: 'Excerpt', type: 'textarea', required: true },
     { key: 'content', label: 'Content (HTML)', type: 'textarea', required: true },
     { key: 'coverImage', label: 'Cover Image', type: 'image' },
+    { key: 'imageAlt', label: 'Image Alt Text', type: 'text' },
     { key: 'readTime', label: 'Read Time (mins)', type: 'number', default: 5 },
     { key: 'isPublished', label: 'Published', type: 'toggle', onLabel: 'Published', offLabel: 'Draft', default: false },
     { key: 'seoTitle', label: 'SEO Title', type: 'text' },

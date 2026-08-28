@@ -16,6 +16,7 @@ const schema = {
     { key: 'liveUrl',         label: 'Live URL',          type: 'url' },
     { key: 'logo',            label: 'Logo URL',          type: 'url' },
     { key: 'heroImage',       label: 'Hero Image URL',    type: 'url' },
+    { key: 'imageAlt',        label: 'Image Alt Text',    type: 'text' },
     { key: 'order',           label: 'Display Order',     type: 'number', default: 0 },
     { key: 'isVisible',       label: 'Visible on site',   type: 'toggle', onLabel: 'Visible', offLabel: 'Hidden', default: true },
     { key: 'seoTitle',        label: 'SEO Title',         type: 'text' },

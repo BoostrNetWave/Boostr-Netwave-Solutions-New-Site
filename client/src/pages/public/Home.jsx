@@ -26,6 +26,7 @@ export default function Home() {
       <PageMeta 
         title="Boostr Netwave Solutions" 
         description="Engineering the Digital Future. Build and change your future with Boostr Netwave Solutions." 
+        url={"https://boostrnetwave.com" + window.location.pathname}
       />
       <StructuredData 
         schemaType="Organization"

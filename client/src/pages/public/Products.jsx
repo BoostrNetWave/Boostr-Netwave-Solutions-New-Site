@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import API_BASE from '../../config/api';
+import PageMeta from '../../components/PageMeta';
 
 export default function Products() {
   const [products, setProducts] = useState([]);
@@ -23,6 +24,11 @@ export default function Products() {
 
   return (
     <div className="bg-white min-h-screen">
+      <PageMeta 
+        title="Products" 
+        description="Proprietary Tools. Unfair Advantage. Explore our suite of enterprise SaaS and AI products." 
+        url={"https://boostrnetwave.com" + window.location.pathname}
+      />
       {/* ===== PAGE HEADER ===== */}
       <section id="page-header" className="pt-40 pb-24 bg-soft border-b border-border">
         <div className="max-w-[1360px] mx-auto px-6 md:px-10">
@@ -49,7 +55,7 @@ export default function Products() {
             products.map((product, index) => (
               <div key={product._id} className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center reveal visible">
                 <div className={`img-zoom-wrap rounded-[40px] overflow-hidden shadow-[0_40px_100px_rgba(0,82,255,0.08)] ${index % 2 !== 0 ? 'lg:order-2' : ''}`}>
-                  <img className="img-zoom w-full h-[400px] object-cover transition-transform duration-900 hover:scale-[1.06]" src={product.coverImage || "https://storage.googleapis.com/uxpilot-auth.appspot.com/gen_1ffd08632a_bcd9165628f4605e.png"} alt={product.title} />
+                  <img className="img-zoom w-full h-[400px] object-cover transition-transform duration-900 hover:scale-[1.06]" src={product.coverImage || "https://storage.googleapis.com/uxpilot-auth.appspot.com/gen_1ffd08632a_bcd9165628f4605e.png"} alt={product.imageAlt || product.title} />
                 </div>
                 <div className={`space-y-6 ${index % 2 !== 0 ? 'lg:order-1' : ''}`}>
                   <h2 className="font-display font-black text-ink tracking-tighter leading-[0.95] text-[clamp(2rem,3vw,2.8rem)]">

@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PageMeta from './PageMeta';
 
 export default function NotFound({ message = "The page you're looking for doesn't exist or has been moved." }) {
   return (
     <div className="bg-white min-h-[70vh] flex flex-col items-center justify-center px-6 text-center">
+      <PageMeta title="Page Not Found" robots="noindex, follow" />
       <div className="w-20 h-20 bg-blue-pale rounded-2xl flex items-center justify-center mb-8 mx-auto reveal visible">
         <i className="fa-solid fa-ghost text-blue text-3xl"></i>
       </div>

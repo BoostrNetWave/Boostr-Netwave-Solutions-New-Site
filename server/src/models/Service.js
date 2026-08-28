@@ -7,6 +7,7 @@ const serviceSchema = new mongoose.Schema({
   longDescription: { type: String },
   icon: { type: String },            // icon class or SVG string
   image: { type: String },           // URL
+  imageAlt: { type: String, default: '' },
   features: [{ type: String }],
   order: { type: Number, default: 0 },
   isVisible: { type: Boolean, default: true },

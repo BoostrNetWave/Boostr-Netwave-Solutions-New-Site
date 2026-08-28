@@ -35,6 +35,7 @@ export default function ProductDetail() {
         title={product.seoTitle || product.title} 
         description={product.seoDescription || product.excerpt} 
         image={product.heroImage || product.coverImage}
+        url={`https://boostrnetwave.com/products/${product.slug}`}
       />
       {/* ===== HERO SECTION ===== */}
       <section className="pt-40 pb-20 bg-ink relative overflow-hidden">
@@ -63,7 +64,7 @@ export default function ProductDetail() {
       <section className="py-20 bg-soft border-b border-border">
         <div className="max-w-[1360px] mx-auto px-6 md:px-10">
           <div className="reveal visible img-zoom-wrap rounded-[40px] overflow-hidden shadow-[0_40px_100px_rgba(0,82,255,0.12)]">
-            <img className="img-zoom w-full h-[500px] object-cover transition-transform duration-900 hover:scale-[1.06]" src={product.heroImage || product.coverImage || "https://storage.googleapis.com/uxpilot-auth.appspot.com/gen_4456573a0b_241e79a61f2eacd3.png"} alt={product.title} />
+            <img className="img-zoom w-full h-[500px] object-cover transition-transform duration-900 hover:scale-[1.06]" src={product.heroImage || product.coverImage || "https://storage.googleapis.com/uxpilot-auth.appspot.com/gen_4456573a0b_241e79a61f2eacd3.png"} alt={product.imageAlt || product.title} />
           </div>
         </div>
       </section>

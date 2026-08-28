@@ -6,6 +6,7 @@ const blogSchema = new mongoose.Schema({
   excerpt: { type: String, required: true },
   content: { type: String, required: true },   // rich HTML/markdown
   coverImage: { type: String },
+  imageAlt: { type: String, default: '' },
   author: { type: String, default: 'Boostr Netwave Team' },
   tags: [{ type: String }],
   category: { type: String },

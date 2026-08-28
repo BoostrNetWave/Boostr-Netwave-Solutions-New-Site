@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import API_BASE from '../../config/api';
+import PageMeta from '../../components/PageMeta';
 
 export default function Careers() {
   const [roles, setRoles] = useState([]);
@@ -23,6 +24,11 @@ export default function Careers() {
 
   return (
     <div className="bg-white min-h-screen">
+      <PageMeta 
+        title="Careers" 
+        description="Build world-class technology with us. Explore open roles at Boostr Netwave Solutions." 
+        url={"https://boostrnetwave.com" + window.location.pathname}
+      />
       {/* ===== PAGE HEADER ===== */}
       <section id="page-header" className="pt-40 pb-24 bg-soft border-b border-border">
         <div className="max-w-[1360px] mx-auto px-6 md:px-10">

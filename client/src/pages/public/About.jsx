@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import API_BASE from '../../config/api';
+import PageMeta from '../../components/PageMeta';
 
 export default function About() {
   const [team, setTeam] = useState([]);
@@ -23,6 +24,11 @@ export default function About() {
 
   return (
     <div className="bg-white min-h-screen">
+      <PageMeta 
+        title="About Us" 
+        description="Learn more about Boostr Netwave Solutions and our mission to build the digital future." 
+        url={"https://boostrnetwave.com" + window.location.pathname}
+      />
       {/* ===== PAGE HEADER ===== */}
       <section className="pt-40 pb-24 bg-soft border-b border-border">
         <div className="max-w-[1360px] mx-auto px-6 md:px-10">
@@ -97,7 +103,7 @@ export default function About() {
               {team.map((member, i) => (
                 <div key={member._id} className={`bg-white rounded-3xl overflow-hidden border border-border group reveal visible stagger-${(i % 4) + 1}`}>
                   <div className="h-64 overflow-hidden relative">
-                    <img className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src={member.image || "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg"} alt={member.name} />
+                    <img className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src={member.image || "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg"} alt={member.imageAlt || member.name} />
                   </div>
                   <div className="p-6 text-center">
                     <h4 className="font-black text-xl text-ink mb-1">{member.name}</h4>

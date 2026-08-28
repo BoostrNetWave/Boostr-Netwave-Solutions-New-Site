@@ -41,6 +41,7 @@ export default function CaseStudyDetail() {
         title={project.seoTitle || project.title} 
         description={project.seoDescription || project.description} 
         image={project.image}
+        url={`https://boostrnetwave.com/case-studies/${project.slug}`}
       />
       {/* ===== CASE STUDY HEADER ===== */}
       <section id="case-header" className="pt-40 pb-20 bg-soft border-b border-border overflow-hidden">
@@ -61,7 +62,7 @@ export default function CaseStudyDetail() {
             <p className="text-xl text-muted leading-relaxed mt-6">{project.description}</p>
           </div>
           <div className="reveal-right visible img-zoom-wrap rounded-[40px] overflow-hidden mt-16 shadow-[0_40px_100px_rgba(0,82,255,0.12)]">
-            <img className="img-zoom w-full h-[440px] object-cover transition-transform duration-900 hover:scale-[1.06]" src={project.image || "https://storage.googleapis.com/uxpilot-auth.appspot.com/gen_4456573a0b_241e79a61f2eacd3.png"} alt={project.title} />
+            <img className="img-zoom w-full h-[440px] object-cover transition-transform duration-900 hover:scale-[1.06]" src={project.image || "https://storage.googleapis.com/uxpilot-auth.appspot.com/gen_4456573a0b_241e79a61f2eacd3.png"} alt={project.imageAlt || project.title} />
           </div>
         </div>
       </section>
@@ -151,7 +152,7 @@ export default function CaseStudyDetail() {
               {related.map((rel, index) => (
                 <Link to={`/case-studies/${rel.slug}`} key={rel._id} className={`service-card block bg-soft rounded-[28px] overflow-hidden reveal visible stagger-${index + 1}`}>
                   <div className="img-zoom-wrap h-56 overflow-hidden">
-                    <img className="img-zoom w-full h-full object-cover transition-transform duration-900 hover:scale-[1.06]" src={rel.image || "https://storage.googleapis.com/uxpilot-auth.appspot.com/gen_5d4b025fde_5dacc386dcfc7279.png"} alt={rel.title} />
+                    <img className="img-zoom w-full h-full object-cover transition-transform duration-900 hover:scale-[1.06]" src={rel.image || "https://storage.googleapis.com/uxpilot-auth.appspot.com/gen_5d4b025fde_5dacc386dcfc7279.png"} alt={rel.imageAlt || rel.title} />
                   </div>
                   <div className="p-8">
                     <span className="text-xs font-bold uppercase tracking-widest text-blue px-3 py-1 bg-blue-pale rounded-full">{rel.category}</span>

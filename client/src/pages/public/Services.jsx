@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import API_BASE from '../../config/api';
+import PageMeta from '../../components/PageMeta';
 
 export default function Services() {
   const [services, setServices] = useState([]);
@@ -44,6 +45,11 @@ export default function Services() {
 
   return (
     <div className="bg-white min-h-screen">
+      <PageMeta 
+        title="Services" 
+        description="Every Discipline. One Engineering Partner. From software engineering to AI and cloud infrastructure." 
+        url={"https://boostrnetwave.com" + window.location.pathname}
+      />
       {/* ===== PAGE HEADER ===== */}
       <section id="page-header" className="pt-40 pb-24 bg-soft border-b border-border">
         <div className="max-w-[1360px] mx-auto px-6 md:px-10">
@@ -90,7 +96,7 @@ export default function Services() {
               {filteredServices.map((service, index) => (
                 <Link to={`/services/${service.slug}`} key={service._id} className={`service-item service-card bg-white rounded-[28px] overflow-hidden cursor-pointer reveal block stagger-${(index % 4) + 1} border border-border hover:-translate-y-2 hover:border-blue hover:shadow-[0_30px_60px_rgba(0,82,255,0.1),_0_8px_20px_rgba(0,0,0,0.06)] transition-all duration-500`}>
                   <div className="img-zoom-wrap h-44 overflow-hidden">
-                    <img className="img-zoom w-full h-full object-cover transition-transform duration-900 hover:scale-[1.06]" src={service.image || "https://storage.googleapis.com/uxpilot-auth.appspot.com/gen_f76e359734_29cb655b3f919165.png"} alt={service.title} />
+                    <img className="img-zoom w-full h-full object-cover transition-transform duration-900 hover:scale-[1.06]" src={service.image || "https://storage.googleapis.com/uxpilot-auth.appspot.com/gen_f76e359734_29cb655b3f919165.png"} alt={service.imageAlt || service.title} />
                   </div>
                   <div className="p-8">
                     <div className="service-icon-wrap w-12 h-12 bg-blue-pale rounded-xl flex items-center justify-center mb-5 transition-colors duration-400 group-hover:bg-blue">

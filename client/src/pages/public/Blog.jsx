@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import API_BASE from '../../config/api';
+import PageMeta from '../../components/PageMeta';
 
 export default function Blog() {
   const [posts, setPosts] = useState([]);
@@ -32,6 +33,11 @@ export default function Blog() {
 
   return (
     <div className="bg-white min-h-screen">
+      <PageMeta 
+        title="Blog & Insights" 
+        description="Insights, technical deep-dives, and perspectives on software engineering, AI, and cloud architecture from our team of experts." 
+        url={"https://boostrnetwave.com" + window.location.pathname}
+      />
       {/* ===== PAGE HEADER ===== */}
       <section id="page-header" className="pt-40 pb-24 bg-soft border-b border-border">
         <div className="max-w-[1360px] mx-auto px-6 md:px-10">
@@ -80,7 +86,7 @@ export default function Blog() {
               {filteredPosts.map((post, index) => (
                 <Link to={`/blog/${post.slug}`} key={post._id} className={`service-card block bg-soft rounded-[28px] overflow-hidden reveal visible stagger-${(index % 3) + 1} border border-border hover:-translate-y-2 hover:border-blue hover:shadow-[0_30px_60px_rgba(0,82,255,0.1),_0_8px_20px_rgba(0,0,0,0.06)] transition-all duration-500`}>
                   <div className="img-zoom-wrap h-56 overflow-hidden">
-                    <img className="img-zoom w-full h-full object-cover transition-transform duration-900 hover:scale-[1.06]" src={post.coverImage || "https://storage.googleapis.com/uxpilot-auth.appspot.com/gen_1472fbbb85_f2d505479c03d73c.png"} alt={post.title} />
+                    <img className="img-zoom w-full h-full object-cover transition-transform duration-900 hover:scale-[1.06]" src={post.coverImage || "https://storage.googleapis.com/uxpilot-auth.appspot.com/gen_1472fbbb85_f2d505479c03d73c.png"} alt={post.imageAlt || post.title} />
                   </div>
                   <div className="p-8">
                     <span className="text-xs font-bold uppercase tracking-widest text-blue px-3 py-1 bg-blue-pale rounded-full">{post.category || 'Article'}</span>

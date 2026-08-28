@@ -17,6 +17,7 @@ const schema = {
     { key: 'solution',    label: 'Our Solution',   type: 'textarea', placeholder: 'What did we build?' },
     { key: 'result',      label: 'The Result',     type: 'textarea', placeholder: 'Measurable outcomes achieved.' },
     { key: 'image',       label: 'Hero Image URL', type: 'url' },
+    { key: 'imageAlt',    label: 'Image Alt Text', type: 'text' },
     { key: 'liveUrl',     label: 'Live URL',       type: 'url' },
     { key: 'isFeatured',  label: 'Featured on homepage', type: 'toggle', onLabel: 'Featured', offLabel: 'Not featured', default: false },
     { key: 'order',       label: 'Display Order',  type: 'number', default: 0 },

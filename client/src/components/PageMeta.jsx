@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
-export default function PageMeta({ title, description, url, image, ogType }) {
+export default function PageMeta({ title, description, url, image, ogType, robots }) {
   const siteName = "Boostr Netwave Solutions";
   const fullTitle = title ? `${title} | ${siteName}` : siteName;
   const defaultDesc = "We specialize in software engineering, AI/ML, cloud services, and proprietary SaaS platforms that empower businesses globally.";
@@ -14,6 +14,7 @@ export default function PageMeta({ title, description, url, image, ogType }) {
     <Helmet>
       <title>{fullTitle}</title>
       <meta name="description" content={description || defaultDesc} />
+      {robots && <meta name="robots" content={robots} />}
       {url && <link rel="canonical" href={url} />}
       
       {/* Open Graph */}

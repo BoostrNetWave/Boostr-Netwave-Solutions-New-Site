@@ -13,6 +13,7 @@ const schema = {
     { key: 'longDescription',  label: 'Long Description',  type: 'textarea' },
     { key: 'icon',             label: 'Icon (Font Awesome class)', type: 'text', placeholder: 'e.g. fa-code' },
     { key: 'image',            label: 'Image URL',         type: 'url' },
+    { key: 'imageAlt',         label: 'Image Alt Text',    type: 'text' },
     { key: 'order',            label: 'Display Order',     type: 'number', default: 0 },
     { key: 'isVisible',        label: 'Visible on site',   type: 'toggle', onLabel: 'Visible', offLabel: 'Hidden', default: true },
     { key: 'seoTitle',         label: 'SEO Title',         type: 'text' },

@@ -9,6 +9,7 @@ const schema = {
     { key: 'name', label: 'Name', type: 'text', required: true },
     { key: 'role', label: 'Role/Title', type: 'text', required: true },
     { key: 'image', label: 'Photo URL', type: 'url' },
+    { key: 'imageAlt', label: 'Image Alt Text', type: 'text' },
     { key: 'bio', label: 'Short Bio', type: 'textarea' },
     { key: 'linkedin', label: 'LinkedIn URL', type: 'url' },
     { key: 'twitter', label: 'Twitter/X URL', type: 'url' },

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import API_BASE from '../../config/api';
+import PageMeta from '../../components/PageMeta';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -32,6 +33,11 @@ export default function Contact() {
 
   return (
     <div className="bg-white min-h-screen">
+      <PageMeta 
+        title="Contact Us" 
+        description="Get in touch with Boostr Netwave Solutions to engineer your success." 
+        url={"https://boostrnetwave.com" + window.location.pathname}
+      />
       {/* ===== PAGE HEADER ===== */}
       <section className="pt-40 pb-20 bg-soft border-b border-border">
         <div className="max-w-[1360px] mx-auto px-6 md:px-10">

@@ -5,6 +5,7 @@ const teamMemberSchema = new mongoose.Schema({
   role: { type: String, required: true },
   category: { type: String, default: 'Core Team' },
   image: { type: String }, // Optional initially, Cloudinary URL
+  imageAlt: { type: String, default: '' },
   bio: { type: String },
   linkedin: { type: String },
   twitter: { type: String },

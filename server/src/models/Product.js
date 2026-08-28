@@ -13,6 +13,7 @@ const productSchema = new mongoose.Schema({
   longDescription:  { type: String },                      // full product page content
   logo:             { type: String },                      // product logo URL
   heroImage:        { type: String },                      // product screenshot/hero
+  imageAlt:         { type: String, default: '' },
   category:         { type: String },                      // e.g. "AI Tool", "SaaS Platform"
   status:           { type: String, enum: ['live', 'beta', 'coming-soon'], default: 'live' },
   liveUrl:          { type: String },

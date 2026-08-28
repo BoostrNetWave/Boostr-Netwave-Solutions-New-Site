@@ -86,7 +86,7 @@ export default function Team() {
               const CardInner = (
                 <div className={`bg-white rounded-3xl overflow-hidden h-full flex flex-col ${isAlliance ? '' : 'border border-border'}`}>
                   <div className="h-64 overflow-hidden relative">
-                    <img className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" src={member.image || "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg"} alt={member.name} />
+                    <img className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" src={member.image || "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg"} alt={member.imageAlt || member.name} />
                   </div>
                   <div className="p-6 text-center flex flex-col flex-grow">
                     <h4 className="font-black text-xl text-ink mb-1">{member.name}</h4>

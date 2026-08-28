@@ -28,8 +28,6 @@ const { applySecurityMiddleware } = require("./middleware/security");
 const { globalLimiter } = require("./middleware/rateLimiter");
 const { notFoundHandler, errorHandler } = require("./middleware/errorHandler");
 const apiRoutes = require("./routes/index");
-const sitemapRouter = require("./routes/sitemap");
-
 const app = express();
 
 // ── 1. HTTP request logging ───────────────────────────────────────────────────
@@ -51,7 +49,6 @@ app.use("/api", globalLimiter);
 
 // ── 6. API routes ─────────────────────────────────────────────────────────────
 app.use("/api", apiRoutes);
-app.use("/", sitemapRouter);
 
 // ── 7. 404 handler (must be after all routes) ─────────────────────────────────
 app.use(notFoundHandler);

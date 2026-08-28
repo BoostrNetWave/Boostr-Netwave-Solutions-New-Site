@@ -36,6 +36,7 @@ export default function ServiceDetail() {
         title={service.seoTitle || service.title} 
         description={service.seoDescription || service.excerpt} 
         image={service.image}
+        url={`https://boostrnetwave.com/services/${service.slug}`}
       />
       <StructuredData 
         schemaType="Service"
@@ -73,7 +74,7 @@ export default function ServiceDetail() {
               </div>
             </div>
             <div className="reveal-right visible img-zoom-wrap rounded-[40px] overflow-hidden shadow-[0_40px_100px_rgba(0,82,255,0.12)]">
-              <img className="img-zoom w-full h-[400px] object-cover transition-transform duration-900 hover:scale-[1.06]" src={service.image || "https://storage.googleapis.com/uxpilot-auth.appspot.com/gen_f76e359734_29cb655b3f919165.png"} alt={service.title} />
+              <img className="img-zoom w-full h-[400px] object-cover transition-transform duration-900 hover:scale-[1.06]" src={service.image || "https://storage.googleapis.com/uxpilot-auth.appspot.com/gen_f76e359734_29cb655b3f919165.png"} alt={service.imageAlt || service.title} />
             </div>
           </div>
         </div>

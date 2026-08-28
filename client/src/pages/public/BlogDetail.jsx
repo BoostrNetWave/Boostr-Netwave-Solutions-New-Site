@@ -43,6 +43,7 @@ export default function BlogDetail() {
         title={post.seoTitle || post.title} 
         description={post.seoDescription || post.excerpt} 
         image={post.coverImage}
+        url={`https://boostrnetwave.com/blog/${post.slug}`}
       />
       <StructuredData 
         schemaType="Article"
@@ -100,7 +101,7 @@ export default function BlogDetail() {
       {post.coverImage && (
         <section id="cover-image" className="py-16 bg-white">
           <div className="max-w-[1100px] mx-auto px-6 md:px-10 reveal visible img-zoom-wrap rounded-[32px] overflow-hidden shadow-[0_40px_100px_rgba(0,82,255,0.12)]">
-            <img className="img-zoom w-full h-[440px] object-cover transition-transform duration-900 hover:scale-[1.06]" src={post.coverImage} alt={post.title} />
+            <img className="img-zoom w-full h-[440px] object-cover transition-transform duration-900 hover:scale-[1.06]" src={post.coverImage} alt={post.imageAlt || post.title} />
           </div>
         </section>
       )}
@@ -127,7 +128,7 @@ export default function BlogDetail() {
               {related.map((rel, i) => (
                 <Link to={`/blog/${rel.slug}`} key={rel._id} className={`service-card block bg-white rounded-[28px] overflow-hidden reveal visible stagger-${(i % 3) + 1} border border-border hover:-translate-y-2 hover:border-blue hover:shadow-[0_30px_60px_rgba(0,82,255,0.1),_0_8px_20px_rgba(0,0,0,0.06)] transition-all duration-500`}>
                   <div className="img-zoom-wrap h-44 overflow-hidden">
-                    <img className="img-zoom w-full h-full object-cover transition-transform duration-900 hover:scale-[1.06]" src={rel.coverImage || "https://storage.googleapis.com/uxpilot-auth.appspot.com/gen_1472fbbb85_f2d505479c03d73c.png"} alt={rel.title} />
+                    <img className="img-zoom w-full h-full object-cover transition-transform duration-900 hover:scale-[1.06]" src={rel.coverImage || "https://storage.googleapis.com/uxpilot-auth.appspot.com/gen_1472fbbb85_f2d505479c03d73c.png"} alt={rel.imageAlt || rel.title} />
                   </div>
                   <div className="p-6">
                     <span className="text-xs font-bold uppercase tracking-widest text-blue px-3 py-1 bg-blue-pale rounded-full">{rel.category}</span>
