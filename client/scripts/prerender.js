@@ -63,6 +63,19 @@ async function prerender() {
   const routes = await getDynamicRoutes();
   console.log(`📌 Found ${routes.length} routes to prerender.`);
 
+  // BUG 1 FIX: Generate sitemap.xml UNCONDITIONALLY, before Playwright even tries to launch
+  const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${routes.map(route => `  <url>\n    <loc>https://boostrnetwave.com${route}</loc>\n    <changefreq>weekly</changefreq>\n    <priority>${route === '/' ? '1.0' : '0.8'}</priority>\n  </url>`).join('\n')}
+</urlset>`;
+  // Ensure dist exists before writing sitemap
+  fs.mkdirSync(path.join(process.cwd(), 'dist'), { recursive: true });
+  fs.writeFileSync(path.join(process.cwd(), 'dist', 'sitemap.xml'), sitemapXml);
+  console.log('  ✅ Generated sitemap.xml');
+
+  // Add the 404 route for prerendering AFTER sitemap is generated (we don't want /404 in the sitemap)
+  const prerenderRoutes = [...routes, '/404'];
+
   let browser;
   try {
     browser = await chromium.launch();
@@ -81,7 +94,7 @@ async function prerender() {
   let success = 0;
   let failed = 0;
 
-  for (const route of routes) {
+  for (const route of prerenderRoutes) {
     const page = await context.newPage();
     console.log(`Prerendering ${route}...`);
 
@@ -108,11 +121,16 @@ async function prerender() {
         console.warn(`    ⚠️  WARNING: ${route} only ${html.length} bytes — may be a loading skeleton! Skipping.`);
         failed++;
       } else {
-        const filePath = path.join(
-          process.cwd(),
-          'dist',
-          route === '/' ? 'index.html' : `${route}/index.html`
-        );
+        let relativePath;
+        if (route === '/') {
+          relativePath = 'index.html';
+        } else if (route === '/404') {
+          relativePath = '404.html';
+        } else {
+          relativePath = `${route}/index.html`;
+        }
+
+        const filePath = path.join(process.cwd(), 'dist', relativePath);
         fs.mkdirSync(path.dirname(filePath), { recursive: true });
         fs.writeFileSync(filePath, html);
         console.log(`  ✅ Saved ${route} (${Math.round(html.length / 1024)}KB)`);
@@ -125,14 +143,6 @@ async function prerender() {
       await page.close();
     }
   }
-
-  // Generate sitemap.xml
-  const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${routes.map(route => `  <url>\n    <loc>https://boostrnetwave.com${route}</loc>\n    <changefreq>weekly</changefreq>\n    <priority>${route === '/' ? '1.0' : '0.8'}</priority>\n  </url>`).join('\n')}
-</urlset>`;
-  fs.writeFileSync(path.join(process.cwd(), 'dist', 'sitemap.xml'), sitemapXml);
-  console.log('  ✅ Generated sitemap.xml');
 
   await browser.close();
   previewServer.httpServer.close();
