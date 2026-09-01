@@ -11,7 +11,8 @@ router.get('/:id', getTeamMemberById);
 // Admin-only routes
 router.use(protect);
 router.post('/', restrictTo('superadmin', 'editor'), createTeamMember);
-router.put('/:id', restrictTo('superadmin', 'editor'), updateTeamMember);
+router.put('/:id', restrictTo('superadmin', 'editor'), updateTeamMember);   // kept for backward compat
+router.patch('/:id', restrictTo('superadmin', 'editor'), updateTeamMember); // used by admin panel
 router.delete('/:id', restrictTo('superadmin'), deleteTeamMember);
 
 module.exports = router;
