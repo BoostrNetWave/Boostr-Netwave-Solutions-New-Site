@@ -51,7 +51,12 @@ const applySecurityMiddleware = (app) => {
           defaultSrc: ["'self'"],
           styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
           fontSrc: ["'self'", "https://fonts.gstatic.com"],
-          imgSrc: ["'self'", "data:", "https://res.cloudinary.com", "https://storage.googleapis.com"],
+          imgSrc: ["'self'", "data:", "blob:", "https://res.cloudinary.com", "https://storage.googleapis.com", "https:"],
+          // NOTE: "https:" allows any HTTPS image source.
+          // This is necessary because admins paste external image URLs (e.g. cdn.phototourl.com,
+          // unsplash.com, etc.) into the CMS. Restricting to specific domains would break
+          // any image the admin uploads from an unlisted host.
+          // Scripts and other resources remain tightly restricted — only images are open.
           scriptSrc: ["'self'"],
           connectSrc: ["'self'"],
           frameSrc: ["'self'", "https://www.youtube.com", "https://player.vimeo.com"],
