@@ -8,6 +8,11 @@ const getAll = asyncHandler(async (_req, res) => {
   res.json(new ApiResponse(200, projects));
 });
 
+const getAllAdmin = asyncHandler(async (_req, res) => {
+  const projects = await ClientProject.find().sort('order -createdAt');
+  res.json(new ApiResponse(200, projects));
+});
+
 const getFeatured = asyncHandler(async (_req, res) => {
   const projects = await ClientProject.find({ isVisible: true, isFeatured: true }).sort('order');
   res.json(new ApiResponse(200, projects));
@@ -51,4 +56,4 @@ const remove = asyncHandler(async (req, res) => {
   res.json(new ApiResponse(200, null, 'Project deleted.'));
 });
 
-module.exports = { getAll, getFeatured, getOne, create, update, remove };
+module.exports = { getAll, getAllAdmin, getFeatured, getOne, create, update, remove };

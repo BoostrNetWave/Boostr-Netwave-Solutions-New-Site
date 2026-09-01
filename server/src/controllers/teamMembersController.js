@@ -4,6 +4,11 @@ const { ApiError } = require('../utils/ApiError');
 const { ApiResponse } = require('../utils/ApiResponse');
 
 exports.getTeamMembers = asyncHandler(async (req, res) => {
+  const teamMembers = await TeamMember.find({ isVisible: true }).sort({ order: 1 });
+  res.status(200).json(new ApiResponse(200, teamMembers, 'Team members retrieved'));
+});
+
+exports.getAllAdmin = asyncHandler(async (req, res) => {
   const teamMembers = await TeamMember.find().sort({ order: 1 });
   res.status(200).json(new ApiResponse(200, teamMembers, 'Team members retrieved'));
 });

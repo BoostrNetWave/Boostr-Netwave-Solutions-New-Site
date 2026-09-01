@@ -56,9 +56,19 @@ const crud = (resource) => ({
   remove:  (id)      => request('DELETE', `/${resource}/${id}`),
 });
 
-export const servicesApi       = crud('services');
-export const productsApi       = crud('products');
-export const clientProjectsApi = crud('client-projects');
+export const servicesApi = {
+  ...crud('services'),
+  getAll: () => request('GET', '/services/admin/all'),
+};
+export const productsApi = {
+  ...crud('products'),
+  getAll: () => request('GET', '/products/admin/all'),
+};
+export const clientProjectsApi = {
+  ...crud('client-projects'),
+  getAll: () => request('GET', '/client-projects/admin/all'),
+};
+
 // Blog — override getAll to use the admin-only endpoint (includes drafts, no pagination)
 export const blogApi = {
   ...crud('blog'),
@@ -71,9 +81,21 @@ export const careersApi = {
   getAll: () => request('GET', '/careers/admin/all'),
 };
 
-export const testimonialsApi   = crud('testimonials');
-export const galleryApi        = crud('gallery');
-export const teamApi           = crud('team');
+export const testimonialsApi = {
+  ...crud('testimonials'),
+  getAll: () => request('GET', '/testimonials/all'), // This uses /all based on router.get('/all') inside testimonials
+};
+
+export const galleryApi = {
+  ...crud('gallery'),
+  getAll: () => request('GET', '/gallery/all'), // This uses /all based on router.get('/all') inside gallery
+};
+
+export const teamApi = {
+  ...crud('team'),
+  getAll: () => request('GET', '/team/admin/all'),
+};
+
 export const applicationsApi   = crud('applications');
 
 // ── Contact Leads ─────────────────────────────────────────────────────────────

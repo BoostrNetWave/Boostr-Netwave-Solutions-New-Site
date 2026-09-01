@@ -1,17 +1,20 @@
 const express = require('express');
 const router = express.Router();
-const { getAll, getFeatured, getOne, create, update, remove } = require('../controllers/clientProjectsController');
+const { getAll, getFeatured, getOne, getAllAdmin, create, update, remove } = require('../controllers/clientProjectsController');
 const { protect } = require('../middleware/authMiddleware');
 
-// Public
+// Public Static
 router.get('/', getAll);
 router.get('/featured', getFeatured);
-router.get('/:slug', getOne);
 
 // Admin
 router.use(protect);
+router.get('/admin/all', getAllAdmin);
 router.post('/', create);
 router.patch('/:id', update);
 router.delete('/:id', remove);
+
+// Public Dynamic - Must be last
+router.get('/:slug', getOne);
 
 module.exports = router;

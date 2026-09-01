@@ -9,6 +9,12 @@ const getAll = asyncHandler(async (_req, res) => {
   res.json(new ApiResponse(200, services));
 });
 
+// GET /api/services/admin/all (admin)
+const getAllAdmin = asyncHandler(async (_req, res) => {
+  const services = await Service.find().sort('order');
+  res.json(new ApiResponse(200, services));
+});
+
 // GET /api/services/:slug  (public)
 const getOne = asyncHandler(async (req, res) => {
   const service = await Service.findOne({ slug: req.params.slug, isVisible: true });
@@ -36,4 +42,4 @@ const remove = asyncHandler(async (req, res) => {
   res.json(new ApiResponse(200, null, 'Service deleted.'));
 });
 
-module.exports = { getAll, getOne, create, update, remove };
+module.exports = { getAll, getOne, getAllAdmin, create, update, remove };

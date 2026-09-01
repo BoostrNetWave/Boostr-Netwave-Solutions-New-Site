@@ -9,6 +9,11 @@ const getAll = asyncHandler(async (_req, res) => {
   res.json(new ApiResponse(200, products));
 });
 
+const getAllAdmin = asyncHandler(async (_req, res) => {
+  const products = await Product.find().sort('order');
+  res.json(new ApiResponse(200, products));
+});
+
 const getOne = asyncHandler(async (req, res) => {
   const product = await Product.findOne({ slug: req.params.slug, isVisible: true });
   if (!product) throw new ApiError(404, 'Product not found.');
@@ -32,4 +37,4 @@ const remove = asyncHandler(async (req, res) => {
   res.json(new ApiResponse(200, null, 'Product deleted.'));
 });
 
-module.exports = { getAll, getOne, create, update, remove };
+module.exports = { getAll, getAllAdmin, getOne, create, update, remove };
