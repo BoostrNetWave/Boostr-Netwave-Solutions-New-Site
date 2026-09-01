@@ -38,7 +38,14 @@ const login = asyncHandler(async (req, res) => {
 
 // POST /api/auth/logout
 const logout = asyncHandler(async (_req, res) => {
-  res.cookie('jwt', '', { maxAge: 1 });
+  const isProd = process.env.NODE_ENV === 'production';
+  // Must pass the SAME attributes used when setting the cookie, or the browser ignores the clear
+  res.cookie('jwt', '', {
+    httpOnly: true,
+    secure: isProd,
+    sameSite: isProd ? 'none' : 'lax',
+    maxAge: 0, // Immediately expire
+  });
   res.json(new ApiResponse(200, null, 'Logged out successfully.'));
 });
 
