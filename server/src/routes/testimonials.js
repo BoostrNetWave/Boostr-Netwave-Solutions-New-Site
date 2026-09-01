@@ -8,12 +8,13 @@ router.get('/', testimonialsController.getTestimonials);
 
 // Admin routes
 router.use(protect);
-router.use(restrictTo('admin'));
+router.use(restrictTo('superadmin', 'editor'));
 
 router.get('/all', testimonialsController.getAllTestimonials);
 router.post('/', testimonialsController.createTestimonial);
 router.route('/:id')
-  .put(testimonialsController.updateTestimonial)
+  .put(testimonialsController.updateTestimonial)    // kept for backward compat
+  .patch(testimonialsController.updateTestimonial)  // used by admin panel
   .delete(testimonialsController.deleteTestimonial);
 
 module.exports = router;
