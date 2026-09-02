@@ -12,8 +12,8 @@ export default function AdminApplications() {
 
   const fetchApplications = async () => {
     try {
-      const res = await applicationsApi.getAll();
-      setApplications(res.data.data);
+      const data = await applicationsApi.getAll();
+      setApplications(Array.isArray(data) ? data : []);
     } catch (err) {
       toast.error('Failed to load applications');
     } finally {
