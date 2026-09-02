@@ -13,7 +13,7 @@ const schema = {
     { key: 'type',            label: 'Employment Type',  type: 'select',   options: [{ value: 'Full-time', label: 'Full-time' }, { value: 'Part-time', label: 'Part-time' }, { value: 'Internship', label: 'Internship' }, { value: 'Contract', label: 'Contract' }, { value: 'Remote', label: 'Remote' }], default: 'Full-time' },
     { key: 'experience',      label: 'Experience Required', type: 'text',  placeholder: 'e.g. 2-4 years' },
     { key: 'description',     label: 'Job Description',  type: 'textarea', required: true },
-    { key: 'isOpen',          label: 'Accepting Applications', type: 'toggle', onLabel: 'Open', offLabel: 'Closed', default: true },
+    { key: 'isActive',          label: 'Accepting Applications', type: 'toggle', onLabel: 'Open', offLabel: 'Closed', default: true },
     { key: 'seoTitle',        label: 'SEO Title',        type: 'text' },
     { key: 'seoDescription',  label: 'SEO Description',  type: 'textarea' },
   ],
@@ -21,7 +21,7 @@ const schema = {
     { key: 'title',      label: 'Position' },
     { key: 'department', label: 'Department' },
     { key: 'type',       label: 'Type' },
-    { key: 'isOpen',     label: 'Status', type: 'toggle' },
+    { key: 'isActive',     label: 'Status', type: 'toggle' },
   ],
 };
 
