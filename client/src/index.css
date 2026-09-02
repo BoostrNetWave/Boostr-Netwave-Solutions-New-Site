@@ -9,6 +9,11 @@
   body { 
     @apply font-sans bg-white text-ink overflow-x-hidden;
   }
+  
+  /* Force native dropdown options to have black text, fixing white-on-white OS rendering */
+  option {
+    @apply text-ink bg-white;
+  }
 }
 
 @layer utilities {
