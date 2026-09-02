@@ -8,7 +8,7 @@ const schema = {
     { key: 'name',    label: 'Client Name',    type: 'text',     required: true },
     { key: 'role',    label: 'Role / Title',   type: 'text',     required: true, placeholder: 'e.g. CEO, Founder' },
     { key: 'company', label: 'Company',        type: 'text' },
-    { key: 'avatar',  label: 'Photo URL',      type: 'url' },
+    { key: 'image',  label: 'Photo URL',      type: 'image' },
     { key: 'quote',   label: 'Testimonial',    type: 'textarea', required: true, placeholder: 'Must be a real, verified quote.' },
     { key: 'rating',  label: 'Star Rating (1–5)', type: 'number', default: 5 },
     { key: 'order',   label: 'Display Order',  type: 'number', default: 0 },

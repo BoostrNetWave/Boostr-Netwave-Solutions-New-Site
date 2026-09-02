@@ -23,13 +23,15 @@ export function useHomeData() {
           productsRes, 
           projectsRes,
           testimonialsRes,
-          settingsRes
+          settingsRes,
+          galleryRes                              // <-- live gallery photos
         ] = await Promise.allSettled([
           axios.get(`${API_BASE}/services`),
           axios.get(`${API_BASE}/products`),
           axios.get(`${API_BASE}/client-projects`),
           axios.get(`${API_BASE}/testimonials`),
-          axios.get(`${API_BASE}/settings`)
+          axios.get(`${API_BASE}/settings`),
+          axios.get(`${API_BASE}/gallery`),       // public endpoint — only isVisible:true items
         ]);
         
         if (!isMounted) return;
@@ -39,6 +41,7 @@ export function useHomeData() {
         const liveProjects = projectsRes.status === 'fulfilled' ? projectsRes.value.data.data : [];
         const liveTestimonials = testimonialsRes.status === 'fulfilled' ? testimonialsRes.value.data.data : [];
         const liveSettings = settingsRes.status === 'fulfilled' ? settingsRes.value.data.data : {};
+        const liveGallery = galleryRes.status === 'fulfilled' ? galleryRes.value.data.data : [];
 
         // For TrustMarquee: partnerships (from settings/seed for now) + top 3 live products as a fallback or client projects
         // We'll use homeSeed.partnerships for now, and live projects for clients
@@ -51,6 +54,10 @@ export function useHomeData() {
           clients: liveProjects,
           testimonials: liveTestimonials.length ? liveTestimonials : homeSeed.testimonials,
           partnerships: homeSeed.partnerships,
+          // DELIBERATE: no seed fallback for gallery.
+          // If DB is empty, pass [] so the section hides itself cleanly.
+          // Showing AI-generated placeholder photos as real company photos is worse than showing nothing.
+          gallery: liveGallery,
           settings: liveSettings
         }));
 

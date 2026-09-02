@@ -1,6 +1,11 @@
 import React from 'react';
 
 export default function GallerySection({ data }) {
+  // Hide the section entirely if no live gallery photos exist in the database.
+  // An empty masonry grid looks broken; hiding is cleaner and avoids showing
+  // AI-generated placeholder photos from the seed file on the live site.
+  if (!data.gallery || data.gallery.length === 0) return null;
+
   return (
     <section id="work" className="py-40 bg-soft overflow-hidden">
       <div className="max-w-[1360px] mx-auto px-6 md:px-10">
