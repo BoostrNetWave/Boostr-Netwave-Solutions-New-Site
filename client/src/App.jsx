@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react';
+import React, { lazy, Suspense, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 
@@ -85,6 +85,14 @@ function PublicSite() {
 
 // ─── App ──────────────────────────────────────────────────────────────────────
 export default function App() {
+  useEffect(() => {
+    console.log(
+      '%c BOOSTR NETWAVE \n%c────────────────\nSYSTEM INITIALIZED\n\nEngineered with care.\n— Ayan Azmi',
+      'font-weight: bold; font-size: 16px; color: #3b82f6;',
+      'color: #888;'
+    );
+  }, []);
+
   return (
     <BrowserRouter>
       <AuthProvider>

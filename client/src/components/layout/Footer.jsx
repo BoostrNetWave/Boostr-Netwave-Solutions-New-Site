@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { homeSeed } from '../../data/home.seed';
 
 export default function Footer() {
   const { company, services, solutions } = homeSeed;
+  const [eggCount, setEggCount] = useState(0);
   
   return (
     <footer id="footer" className="bg-ink border-t border-white/5 pt-20 pb-10">
@@ -61,7 +62,15 @@ export default function Footer() {
           </div>
         </div>
         <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/5 gap-6">
-          <p className="text-white/20 text-xs">© {new Date().getFullYear()} {company.name}. {company.location}.</p>
+          <div className="flex items-center gap-4">
+            <p className="text-white/20 text-xs">© {new Date().getFullYear()} {company.name}. {company.location}.</p>
+            <button 
+              onClick={() => setEggCount(c => c + 1)} 
+              className="text-[10px] text-white/5 font-mono tracking-widest hover:text-white/20 transition-colors cursor-default"
+            >
+              BUILD 01
+            </button>
+          </div>
           <div className="flex flex-wrap justify-center gap-4 sm:gap-8 text-white/20 text-xs">
             <a href="#" className="hover:text-blue transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-blue transition-colors">Terms of Service</a>
@@ -69,6 +78,22 @@ export default function Footer() {
           </div>
         </div>
       </div>
+
+      {/* Engineering Easter Egg */}
+      {eggCount >= 5 && (
+        <div className="fixed bottom-6 left-6 bg-[#0a0a0f] border border-white/10 rounded-xl p-5 shadow-2xl z-50 animate-in slide-in-from-bottom-5 fade-in">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-[10px] text-blue font-bold tracking-[0.2em] uppercase">Engineering Note</span>
+            <button onClick={() => setEggCount(0)} className="text-white/40 hover:text-white text-xs">✕</button>
+          </div>
+          <p className="text-sm text-white/80 font-mono leading-relaxed">
+            This experience was designed,<br/>
+            engineered and shipped with care.<br/><br/>
+            — Ayan Azmi<br/>
+            2026
+          </p>
+        </div>
+      )}
     </footer>
   );
 }
