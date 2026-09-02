@@ -12,7 +12,7 @@ const router = express.Router();
 const storage = multer.memoryStorage();
 
 // Allowed MIME types for uploads
-const ALLOWED_TYPES = [
+const IMAGE_TYPES = [
   'image/jpeg',
   'image/png',
   'image/gif',
@@ -20,15 +20,21 @@ const ALLOWED_TYPES = [
   'image/svg+xml',
   'application/pdf',
 ];
+const VIDEO_TYPES = ['video/mp4', 'video/webm'];
+const ALLOWED_TYPES = [...IMAGE_TYPES, ...VIDEO_TYPES];
+
+// Max sizes: 10 MB for images/docs, 200 MB for video
+const MAX_SIZE_IMAGE = 10 * 1024 * 1024;
+const MAX_SIZE_VIDEO = 200 * 1024 * 1024;
 
 const upload = multer({
   storage,
-  limits: { fileSize: 10 * 1024 * 1024 }, // 10 MB max
+  limits: { fileSize: MAX_SIZE_VIDEO }, // multer enforces a single limit; we re-check per type below
   fileFilter: (_req, file, cb) => {
     if (ALLOWED_TYPES.includes(file.mimetype)) {
       cb(null, true);
     } else {
-      cb(new Error(`File type not allowed: ${file.mimetype}. Allowed: JPEG, PNG, GIF, WEBP, SVG, PDF.`));
+      cb(new Error(`File type not allowed: ${file.mimetype}. Allowed: JPEG, PNG, GIF, WEBP, SVG, PDF, MP4, WEBM.`));
     }
   },
 });
@@ -41,6 +47,9 @@ const handleMulterError = (err, req, res, next) => {
   next(err);
 };
 
+// Separate video MIME check helper
+const isVideoType = (mime) => VIDEO_TYPES.includes(mime);
+
 router.post(
   '/',
   protect,
@@ -51,20 +60,28 @@ router.post(
       throw new ApiError(400, 'No file provided.');
     }
 
-    // Deep content validation using magic-byte inspection
-    // This catches files with spoofed extensions (e.g. a .txt renamed to .jpg)
-    let fileType;
-    try {
-      const { fileTypeFromBuffer } = await import('file-type');
-      fileType = await fileTypeFromBuffer(req.file.buffer);
-    } catch (e) {
-      // SVG/PDF are text-based and may not resolve — fall back to mime type check
-      fileType = null;
+    // Per-type size enforcement (multer limit above allows up to video max; re-check for images)
+    const isVideo = isVideoType(req.file.mimetype);
+    const maxSize = isVideo ? MAX_SIZE_VIDEO : MAX_SIZE_IMAGE;
+    if (req.file.size > maxSize) {
+      throw new ApiError(400, `File too large. Max size: ${isVideo ? '200MB for video' : '10MB for images'}.`);
     }
 
-    // For binary formats, verify the actual content matches the declared mime type
-    if (fileType && !ALLOWED_TYPES.includes(fileType.mime)) {
-      throw new ApiError(400, `File content does not match declared type. Detected: ${fileType.mime}`);
+    // Deep content validation using magic-byte inspection
+    // SVG, PDF, and video formats are text-based or not reliably detected — skip for those types
+    let fileType;
+    if (!isVideo && !['image/svg+xml', 'application/pdf'].includes(req.file.mimetype)) {
+      try {
+        const { fileTypeFromBuffer } = await import('file-type');
+        fileType = await fileTypeFromBuffer(req.file.buffer);
+      } catch (e) {
+        fileType = null;
+      }
+
+      // For binary formats, verify the actual content matches the declared mime type
+      if (fileType && !IMAGE_TYPES.includes(fileType.mime)) {
+        throw new ApiError(400, `File content does not match declared type. Detected: ${fileType.mime}`);
+      }
     }
 
     // Convert buffer to base64 for Cloudinary upload

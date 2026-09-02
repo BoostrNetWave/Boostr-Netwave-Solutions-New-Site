@@ -1,11 +1,9 @@
 import React from 'react';
 
 export default function TestimonialsSection({ data }) {
-  if (!data.testimonials || data.testimonials.length === 0) return null;
-
-  // Only show real testimonials; gracefully hide if only placeholders exist
-  const displayTestimonials = data.testimonials.filter(t => 
-    t.name && !t.name.includes('[') && (t.quote || t.content) && !(t.quote || t.content).includes('[')
+  // Show all visible testimonials from the database that have a name and a quote
+  const displayTestimonials = (data.testimonials || []).filter(t =>
+    t.name && (t.quote || t.content)
   );
 
   if (displayTestimonials.length === 0) return null;

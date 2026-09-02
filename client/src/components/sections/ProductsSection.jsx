@@ -4,9 +4,8 @@ export default function ProductsSection({ data }) {
   // Use up to 6 products for the 3-column grid
   const solutions = data.products || data.solutions.slice(0, 6);
   
-  // Use some placeholder images that look like UI screenshots to match the "Deepsoch AI" vibe.
-  // In a real CMS, these would be screenshot images of the products.
-  const images = [
+  // Fallback screenshots used only when a product has no heroImage set in the admin
+  const fallbackImages = [
     "https://storage.googleapis.com/uxpilot-auth.appspot.com/gen_264be60d1f_b878f3bbb7669887.png",
     "https://storage.googleapis.com/uxpilot-auth.appspot.com/gen_893115574d_eb759b644fd87777.png",
     "https://storage.googleapis.com/uxpilot-auth.appspot.com/gen_4a997b8f3e_65cd36332aadd5a0.png",
@@ -24,7 +23,7 @@ export default function ProductsSection({ data }) {
           <div>
             <span className="text-[10px] font-black text-blue uppercase tracking-[0.2em]">LIVE NOW &middot; SOLUTIONS WE'VE HELPED BUILD</span>
             <h2 className="font-display font-black text-ink tracking-tighter leading-[1] mt-4" style={{fontSize: 'clamp(2rem, 3vw, 3rem)'}}>
-              Our Client Products.
+              Our Products.
             </h2>
           </div>
           <p className="text-sm text-muted max-w-sm leading-relaxed">
@@ -53,12 +52,12 @@ export default function ProductsSection({ data }) {
                   </div>
                 </div>
                 
-                {/* Product Image Area */}
+                {/* Product Image Area — uses heroImage from admin, falls back to placeholder */}
                 <div className="h-48 overflow-hidden relative bg-ink">
                   <img 
                     className="w-full h-full object-cover object-top opacity-90 group-hover:opacity-100 transition-opacity group-hover:scale-105 duration-700" 
-                    src={images[idx % images.length]} 
-                    alt={solution.title} 
+                    src={solution.heroImage || fallbackImages[idx % fallbackImages.length]} 
+                    alt={solution.imageAlt || solution.title} 
                   />
                 </div>
                 
@@ -68,9 +67,16 @@ export default function ProductsSection({ data }) {
                     <span className="px-2 py-1 text-[9px] font-bold text-muted border border-border rounded bg-soft uppercase tracking-widest">{solution.category || 'Product'}</span>
                     <span className="px-2 py-1 text-[9px] font-bold text-muted border border-border rounded bg-soft uppercase tracking-widest">{(solution.location || 'Global').split(',')[0]}</span>
                   </div>
-                  <button className="bg-ink text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded flex items-center gap-1 hover:bg-blue transition-colors">
-                    OPEN <i className="fa-solid fa-arrow-up-right text-[8px]"></i>
-                  </button>
+                  {solution.liveUrl ? (
+                    <a href={solution.liveUrl} target="_blank" rel="noopener noreferrer"
+                      className="bg-ink text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded flex items-center gap-1 hover:bg-blue transition-colors">
+                      OPEN <i className="fa-solid fa-arrow-up-right text-[8px]"></i>
+                    </a>
+                  ) : (
+                    <span className="bg-ink/30 text-white/50 text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded flex items-center gap-1 cursor-not-allowed">
+                      OPEN <i className="fa-solid fa-arrow-up-right text-[8px]"></i>
+                    </span>
+                  )}
                 </div>
 
               </div>

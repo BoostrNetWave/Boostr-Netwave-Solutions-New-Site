@@ -60,6 +60,8 @@ const applySecurityMiddleware = (app) => {
           scriptSrc: ["'self'"],
           connectSrc: ["'self'"],
           frameSrc: ["'self'", "https://www.youtube.com", "https://player.vimeo.com"],
+          // media-src covers native <video>/<audio> elements (different from frame-src which covers iframes)
+          mediaSrc: ["'self'", "https://res.cloudinary.com"],
         },
       },
       crossOriginEmbedderPolicy: false, // Allow Cloudinary embeds

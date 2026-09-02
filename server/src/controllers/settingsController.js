@@ -23,8 +23,11 @@ const upsert = asyncHandler(async (req, res) => {
   const { key } = req.params;
   const { value, group, label, type } = req.body;
 
-  if (key === 'homepageVideoUrl' && !isValidVideoUrl(value)) {
-    throw new ApiError(400, 'Invalid video URL. Only YouTube and Vimeo are supported.');
+  if (
+    (key === 'homepageVideoUrl' || key === 'leadershipVideoUrl') &&
+    !isValidVideoUrl(value)
+  ) {
+    throw new ApiError(400, 'Invalid video URL. Only YouTube, Vimeo, and Cloudinary-hosted .mp4/.webm files are supported.');
   }
 
   const setting = await SiteSettings.findOneAndUpdate(
@@ -42,8 +45,11 @@ const bulkUpsert = asyncHandler(async (req, res) => {
   if (!Array.isArray(settings)) throw new ApiError(400, '"settings" must be an array.');
 
   for (const s of settings) {
-    if (s.key === 'homepageVideoUrl' && !isValidVideoUrl(s.value)) {
-      throw new ApiError(400, 'Invalid video URL. Only YouTube and Vimeo are supported.');
+    if (
+      (s.key === 'homepageVideoUrl' || s.key === 'leadershipVideoUrl') &&
+      !isValidVideoUrl(s.value)
+    ) {
+      throw new ApiError(400, `Invalid video URL for "${s.key}". Only YouTube, Vimeo, and Cloudinary-hosted .mp4/.webm files are supported.`);
     }
   }
 
