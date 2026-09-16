@@ -10,59 +10,92 @@ export function useHomeData() {
     services: [],
     products: [],
     testimonials: [],
-    clients: [], // client projects for marquee
+    clients: [],
   });
 
   useEffect(() => {
     let isMounted = true;
-    
+
     async function fetchData() {
       try {
         const [
-          servicesRes, 
-          productsRes, 
+          servicesRes,
+          productsRes,
           projectsRes,
           testimonialsRes,
           settingsRes,
-          galleryRes                              // <-- live gallery photos
+          galleryRes,
         ] = await Promise.allSettled([
           axios.get(`${API_BASE}/services`),
           axios.get(`${API_BASE}/products`),
           axios.get(`${API_BASE}/client-projects`),
           axios.get(`${API_BASE}/testimonials`),
           axios.get(`${API_BASE}/settings`),
-          axios.get(`${API_BASE}/gallery`),       // public endpoint — only isVisible:true items
+          axios.get(`${API_BASE}/gallery`),
         ]);
-        
+
         if (!isMounted) return;
 
-        const liveServices = servicesRes.status === 'fulfilled' ? servicesRes.value.data.data : [];
-        const liveProducts = productsRes.status === 'fulfilled' ? productsRes.value.data.data : [];
-        const liveProjects = projectsRes.status === 'fulfilled' ? projectsRes.value.data.data : [];
+        const liveServices     = servicesRes.status     === 'fulfilled' ? servicesRes.value.data.data     : [];
+        const liveProducts     = productsRes.status     === 'fulfilled' ? productsRes.value.data.data     : [];
+        const liveProjects     = projectsRes.status     === 'fulfilled' ? projectsRes.value.data.data     : [];
         const liveTestimonials = testimonialsRes.status === 'fulfilled' ? testimonialsRes.value.data.data : [];
-        const liveSettings = settingsRes.status === 'fulfilled' ? settingsRes.value.data.data : {};
-        const liveGallery = galleryRes.status === 'fulfilled' ? galleryRes.value.data.data : [];
+        const liveSettings     = settingsRes.status     === 'fulfilled' ? settingsRes.value.data.data     : {};
+        const liveGallery      = galleryRes.status      === 'fulfilled' ? galleryRes.value.data.data      : [];
 
-        // For TrustMarquee: partnerships (from settings/seed for now) + top 3 live products as a fallback or client projects
-        // We'll use homeSeed.partnerships for now, and live projects for clients
-        
+        // ── Bridge: map flat DB settings keys → nested structure components read ──
+        // The admin panel saves flat keys like "hero.heading", "stats.happyClients".
+        // Section components read data.hero.heading, data.about.description, data.stats etc.
+        // Without this mapping, admin changes are saved to DB but never reach the UI.
+
+        const mergedHero = {
+          ...homeSeed.hero,
+          eyebrow:        liveSettings['hero.eyebrow']        || homeSeed.hero.eyebrow,
+          heading:        liveSettings['hero.heading']        || homeSeed.hero.heading,
+          supportingText: liveSettings['hero.supportingText'] || homeSeed.hero.supportingText,
+          primaryCta:     liveSettings['hero.primaryCta']     || homeSeed.hero.primaryCta,
+          secondaryCta:   liveSettings['hero.secondaryCta']   || homeSeed.hero.secondaryCta,
+        };
+
+        const mergedAbout = {
+          ...homeSeed.about,
+          heading:     liveSettings['about.heading']     || homeSeed.about.heading,
+          description: liveSettings['about.description'] || homeSeed.about.description,
+        };
+
+        // Stats: each stat maps to a settings key by its label
+        const statKeyMap = {
+          'Years of Experience': 'stats.yearsExperience',
+          'Happy Clients':       'stats.happyClients',
+          'Satisfaction':        'stats.satisfaction',
+        };
+        const mergedStats = homeSeed.stats.map(stat => {
+          const key = statKeyMap[stat.label];
+          const liveValue = key && liveSettings[key];
+          return (liveValue !== undefined && liveValue !== '')
+            ? { ...stat, value: Number(liveValue) || liveValue }
+            : stat;
+        });
+
         setData(prev => ({
           ...prev,
-          loading: false,
-          services: liveServices.length ? liveServices : homeSeed.services,
-          products: liveProducts.length ? liveProducts : homeSeed.solutions,
-          clients: liveProjects,
+          loading:      false,
+          hero:         mergedHero,
+          about:        mergedAbout,
+          stats:        mergedStats,
+          services:     liveServices.length ? liveServices : homeSeed.services,
+          products:     liveProducts.length ? liveProducts : homeSeed.solutions,
+          clients:      liveProjects,
           testimonials: liveTestimonials.length ? liveTestimonials : homeSeed.testimonials,
           partnerships: homeSeed.partnerships,
           // DELIBERATE: no seed fallback for gallery.
           // If DB is empty, pass [] so the section hides itself cleanly.
-          // Showing AI-generated placeholder photos as real company photos is worse than showing nothing.
-          gallery: liveGallery,
-          settings: liveSettings
+          gallery:      liveGallery,
+          settings:     liveSettings,
         }));
 
       } catch (err) {
-        console.error("Error fetching home data:", err);
+        console.error('Error fetching home data:', err);
         if (isMounted) {
           setData(prev => ({ ...prev, loading: false }));
         }
