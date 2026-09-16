@@ -89,7 +89,7 @@ export default function ServiceDetail() {
               Transforming businesses with scalable {service.title.toLowerCase()}.
             </h2>
             <div 
-              className="article-body text-lg text-ink/80 leading-relaxed"
+              className="prose prose-blue prose-lg max-w-none text-ink/80 leading-relaxed"
               dangerouslySetInnerHTML={{ __html: service.description }}
             />
           </div>

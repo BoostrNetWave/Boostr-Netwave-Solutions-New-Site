@@ -78,7 +78,7 @@ export default function ProductDetail() {
               <h2 className="font-display font-black text-ink tracking-tighter leading-[0.95] mt-4 text-3xl">About {product.title}</h2>
             </div>
             <div 
-              className="article-body text-lg text-ink/80 leading-relaxed"
+              className="prose prose-blue prose-lg max-w-none text-ink/80 leading-relaxed"
               dangerouslySetInnerHTML={{ __html: product.description }}
             />
           </div>

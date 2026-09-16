@@ -22,7 +22,7 @@ export default function TestimonialsSection({ data }) {
           {displayTestimonials.map((t, idx) => (
             <div key={t._id || idx} className={`bg-soft border border-border p-8 rounded-3xl reveal stagger-${(idx % 3) + 1}`}>
               <i className="fa-solid fa-quote-left text-blue/20 text-4xl mb-6"></i>
-              <p className="text-ink text-lg leading-relaxed mb-8">"{t.quote || t.content}"</p>
+              <p className="text-ink text-lg leading-relaxed mb-8 line-clamp-6">"{t.quote || t.content}"</p>
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-white/50 shadow-sm">
                   <img src={t.image || "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg"} alt={t.name} className="w-full h-full object-cover" />

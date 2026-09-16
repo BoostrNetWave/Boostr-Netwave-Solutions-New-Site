@@ -109,7 +109,7 @@ export default function BlogDetail() {
       {/* ===== ARTICLE BODY ===== */}
       <section id="article-body" className={`bg-white ${post.coverImage ? 'pb-32' : 'py-32'}`}>
         <div 
-          className="max-w-[760px] mx-auto px-6 md:px-10 article-body text-lg text-ink/80 leading-relaxed reveal visible"
+          className="prose prose-blue prose-lg max-w-[760px] mx-auto px-6 md:px-10 text-ink/80 leading-relaxed reveal visible"
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
       </section>

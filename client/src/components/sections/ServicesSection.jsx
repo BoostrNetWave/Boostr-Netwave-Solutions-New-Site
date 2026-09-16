@@ -26,7 +26,7 @@ export default function ServicesSection({ data }) {
                   <i className={`fa-solid ${service.icon || 'fa-laptop-code'} text-blue text-lg transition-colors group-hover:text-white`}></i>
                 </div>
                 <h4 className="font-bold text-xl text-ink mb-3">{service.title}</h4>
-                <p className="text-sm text-muted leading-relaxed mb-5">{service.shortDescription || service.excerpt}</p>
+                <p className="text-sm text-muted leading-relaxed mb-5 line-clamp-3">{service.shortDescription || service.excerpt}</p>
                 <div className="flex items-center gap-2 text-blue text-sm font-bold service-arrow transition-transform group-hover:translate-x-1 group-hover:-translate-y-1">
                   {service.ctaLabel || 'Learn More'} <i className="fa-solid fa-arrow-up-right text-xs"></i>
                 </div>

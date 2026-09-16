@@ -88,7 +88,7 @@ export default function CareerDetail() {
       {/* ===== ROLE BODY ===== */}
       <section className="py-24 bg-white">
         <div className="max-w-[840px] mx-auto px-6 md:px-10 article-body text-lg text-ink/80 leading-relaxed reveal visible">
-          <div dangerouslySetInnerHTML={{ __html: role.description }} />
+          <div className="prose prose-blue max-w-none" dangerouslySetInnerHTML={{ __html: role.description }} />
           
           {role.responsibilities && role.responsibilities.length > 0 && (
             <div className="mt-12">
